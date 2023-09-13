@@ -1,0 +1,19 @@
+int search(int arr[], int N, int X)
+{
+    int x1=0;
+    int value;
+        
+    for(int i=0;i<N;i++)
+    {
+        if(arr[i]==X)
+        {
+            x1=1;
+            value=i;
+            return value;
+        }
+    }
+    
+    
+    return -1;
+        
+}

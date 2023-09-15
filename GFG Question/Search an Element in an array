@@ -12,7 +12,7 @@ int search(int arr[], int N, int X)
             return value;
         }
     }
-    
+     
     
     return -1;
         

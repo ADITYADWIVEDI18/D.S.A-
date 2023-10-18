@@ -1,0 +1,26 @@
+USING FOR LOOP :
+
+void printList (node *head){
+
+  if(head==NULL)return;
+  cout<<head->data<<" ";
+  
+  for(node *p=head->next;p!=head;p=p->next)
+        cout<< p->data <<" ";
+  
+}
+
+USING DO WHILE LOOP :
+
+void printList (node *head){
+
+  if(head==NULL)return;
+  node *p=head;
+  do{
+    cout<<(p->data)<<" ";
+    p = p->next;
+  }
+  while(p!=NULL)
+
+}
+ 

@@ -1,0 +1,16 @@
+
+void Search(node *head, int x){
+
+  int pos=1;
+  node *curr = head;
+  
+  while(curr!=NULL){
+
+      if(curr->data == x)
+          return pos;
+
+      curr=curr->next;
+      pos++;
+  } 
+  return -1;
+}

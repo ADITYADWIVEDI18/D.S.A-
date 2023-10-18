@@ -1,0 +1,18 @@
+
+void deleteLastNode(node *head){
+
+    if(head==NULL)
+        return NULL;
+
+    if(head->next == NULL)
+          delete head;
+          return NULL;
+
+    node *curr = head;
+    while(curr->next!=NULL)
+      curr=curr->next;
+
+    delete curr->next;
+    reuturn head;
+
+}

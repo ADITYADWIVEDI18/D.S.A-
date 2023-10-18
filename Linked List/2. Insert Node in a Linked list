@@ -1,0 +1,20 @@
+class Linkedlist {
+ node *head = NULL;
+ public:
+  Linkedlist(){head = NULL;}
+  void insertNode(int);
+};
+
+void LinkedList::insertNode(int data){
+  Node *newNode = new Node(data);
+  if(head==NULL){
+     head=newNode;
+    return;
+  }
+  Node *temp = head;
+  while(temp!=NULL){
+    temp=temp->next;
+  }
+  temp= newNode;
+  
+}

@@ -1,0 +1,19 @@
+@include<iostream>
+using namespace std;
+
+void insertEndlist(node *head,int data){
+
+  node *curr = new node(data);
+
+  if(head==NULL){
+   reuturn temp;
+  }
+
+  while(temp->next!=NULL){
+      temp=temp->next;
+  }
+  temp->next = curr;
+  
+  return head;
+  
+}

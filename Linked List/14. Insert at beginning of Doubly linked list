@@ -1,0 +1,22 @@
+struct node{
+
+  int data;
+  node *prev;
+  node *next;
+  node(int d)
+  {
+    data=d;
+    next = prev = NULL;
+  }
+  
+}
+
+node *insertBegin(node *head){
+  
+    node *temp = new node(data);
+    temp->next = head;
+    if(head==NULL)
+         head->prev= temp;
+    return temp;
+
+}

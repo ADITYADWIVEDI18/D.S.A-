@@ -1,0 +1,34 @@
+class Linkedlist {
+ node *head = NULL;
+ public:
+  Linkedlist(){head = NULL;}
+  void deleteNode(int);
+};
+
+void Linkedlist::deleteNode(int nodeoffset){
+
+  node *temp1=head,*temp2=NULL;
+  int Listlen=0;
+  if(head==NULL){
+    cout<<"List is empty"<<endl;
+  }
+  
+  while(temp1!=NULL){
+    temp1=temp1->next;
+    Listlen++;
+  }
+
+  if(Listlen<nodeoffset){
+    cout<<"Index out of range"<<endl;
+  }
+
+  temp1=head;
+  while(nodeoffset-- > 1){
+
+      temp2=temp1;
+      temp1=temp1->next;
+  }
+  temp2->next= temp1->next;
+  delete temp1;
+  
+}

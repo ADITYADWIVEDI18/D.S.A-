@@ -1,0 +1,11 @@
+#include<iostream>
+using namespace std;
+
+void beginingInsertlist(node* head,int data){
+
+    node *temp = new node(data);
+    temp->next = head;
+
+    return temp;
+
+}

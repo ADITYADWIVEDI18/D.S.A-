@@ -1,0 +1,17 @@
+node *insertEnd(node *head, int data){
+
+    node *temp =new node(data);
+
+    if(head==NULL)
+       return temp;
+
+    node *curr = head;
+    while(curr!=NULL)
+        curr->next;
+
+    curr->next = temp;
+    temp->prev = curr;
+
+    return head;
+
+}

@@ -1,1 +1,13 @@
+Maximum Consecutive 1s in Binary array O(N)
+--------------------------------------------
 
+int maxConsecutiveOne(int arr[],int n){
+   int res=0;
+    for(int i=0;i<n;i++)        F
+        if(arr[i]==0)
+          count=0;
+        else
+          count++;
+          res=max(res,count);
+        
+}

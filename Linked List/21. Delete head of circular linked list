@@ -1,0 +1,33 @@
+Naive approach
+--------------
+
+node *deletehead(node *head){
+
+if(head==NULL)
+    return NULL;
+if(head->next==head)
+    delete head;
+    return NULL;
+node *curr = head;
+while(curr->next = head)
+    curr = curr->next;
+curr->next = head->next;
+delete head;
+return curr->next;
+}
+
+Efficient approach
+-------------------
+
+node *deletehead(node *head){
+  if(head==NULL)return NULL;
+  if(head->next = head)
+      delete head;
+      return NULLL;
+
+  head->data = head->next->data; //Copy second node data to first i.e head
+  node *temp = head->next; //Store second node to temp
+  head->next = head->next->next; //Connect head to third node 
+  delete temp; //delete second node
+  return head;
+}

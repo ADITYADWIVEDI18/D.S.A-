@@ -1,1 +1,15 @@
+Condition : Array is already sorted;
+-------------------------------------
+//n is size of the given array;
 
+int remDups(int array[],int n){
+
+  int res=1;
+  for(int i=1;i<n;i++){
+    if(array[res-1]!=arr[i]){
+      arr[res]=array[i];
+      res++;
+    }
+  }
+  return res;
+}

@@ -1,1 +1,35 @@
+Naive approach
+--------------
+void printMiddle(node *head){
+  if(head==NULL)
+     return NULL;
 
+  node *curr = head;
+  while(curr!=NULL){
+        count++;
+        curr = curr->next;
+  }
+
+  curr = head;
+  for(int i=0;i<(count)/2;i++){
+    curr=curr->next;
+  }
+  return curr->data;  
+}
+
+
+Efficient Approach
+------------------
+
+void printMiddle(node *head){
+
+    if(head == NULL)
+        return;
+    node *first=head,*slow=head;
+    while(fast->next!=NULL && fast!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+cout<<(slow->data);
+    
+}

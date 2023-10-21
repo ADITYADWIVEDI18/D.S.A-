@@ -1,5 +1,8 @@
 // n is size here 
 
+Efficient approach: O(N)
+------------------------
+
 int secondLargest(int array[], int n){
 
     int res=-1,largest=0;

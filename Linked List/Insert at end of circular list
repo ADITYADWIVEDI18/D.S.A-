@@ -1,0 +1,37 @@
+Naive approach
+''''''''''''''
+
+node *insertEnd (node *head, int x){
+  node *temp = new node(x);
+
+  if(head == NULL)
+      return head;
+
+  node *curr = head;
+  while(curr->next == head){
+      curr = curr->next;
+  } 
+
+  curr->next = temp;
+  temp->next = head;
+  
+  return head;
+}
+
+Efficient Approach
+-------------------
+
+node *insertEnd(node *head, int x){
+
+  node *temp = new node (x);
+  if(head == NULL)
+      return head;
+  else{
+      temp->next = head->next;
+      head->next = temp;
+      int t = temp->data;
+      temp->data = head->data;
+      head->data = t;
+      return temp;
+  }
+}

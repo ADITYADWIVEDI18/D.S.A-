@@ -35,9 +35,9 @@ void leftRotatebyN(int arr[],int n,int d){
 
 Method-3
 --------
-void leftRotatebyN(int arr[],int n,int start,int end){
+void leftRotatebyN(int arr[],int n,int d){
 
-       leftRotatebyN(arr[], n, 0, d);
-       leftRotatebyN(arr[], n, d, n-1);
-       leftRotatebyN(arr[], n, 0, n-1);
+       reverse(arr[], n, 0, d);
+       reverse(arr[], n, d, n-1);
+       reverse(arr[], n, 0, n-1);
 }

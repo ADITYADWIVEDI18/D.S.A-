@@ -1,0 +1,40 @@
+Naive approach
+---------------
+
+node *insertend(node *head, int x){
+  node *temp = new node (x);  
+  if(head == NULL){
+  return temp;  
+  }
+  else{
+    node *head = curr;
+    while(curr->next!=head){
+        curr=curr->next;
+    }
+    curr->next = temp;
+    temp->next = head;
+    return head;
+  }
+}
+
+Efficient Solution
+------------------
+
+node *insertend(node *head, int x){
+  node *temp = new node (x);
+  if(head == NULL){
+    return temp;
+  }
+  else{
+    // Connect temp between head and its next node.
+    temp->next = head->next;
+    head->next = temp;
+    //Swap its value
+    int t= head->value;
+    head->data = temp-> value;
+    temp->value = t;
+    
+    return temp;
+  }
+  
+}

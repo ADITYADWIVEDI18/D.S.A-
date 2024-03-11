@@ -1,1 +1,38 @@
+class Solution {
+public:
+    void dfs(unordered_map<int,bool>&visit,int src,vector<vector<int>>& isConnected)
+    {   
+        visit[src]=true;
+        int n1=isConnected[src].size();
 
+        for(int i=0;i<n1;i++)
+        {
+            if(i!=src && isConnected[src][i]==1 && !visit[i])
+            {
+                dfs(visit,i,isConnected);
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        //Store the different vertices in the graph given
+        int n=isConnected.size();
+        //Initialise a visit for checking it visited prior or not
+        unordered_map<int,bool>visit;   
+        //Initialise this variable to count the different provinces
+        int count=0;
+
+        for(int i=0;i<n;i++)
+        {
+            if(!visit[i])
+            {
+                dfs(visit,i,isConnected);
+                count++;
+            }
+        }
+
+        return count;
+
+
+    }
+};

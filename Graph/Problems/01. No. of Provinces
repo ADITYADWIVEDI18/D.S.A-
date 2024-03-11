@@ -33,6 +33,52 @@ public:
         }
 
         return count;
+}
+
+// Using BFS algorithm 
+
+#include <vector>
+#include <queue>
+#include <unordered_map>
+
+using namespace std;
+
+class Solution {
+public:
+    void bfs(unordered_map<int,bool>& visit, int src, vector<vector<int>>& isConnected) {
+        queue<int> q;
+        q.push(src);
+        visit[src] = true;
+
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+
+            for (int i = 0; i < isConnected[node].size(); i++) {
+                if (i != node && isConnected[node][i] == 1 && !visit[i]) {
+                    q.push(i);
+                    visit[i] = true;
+                }
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        unordered_map<int, bool> visit;
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                bfs(visit, i, isConnected);
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
+
 
 
     }

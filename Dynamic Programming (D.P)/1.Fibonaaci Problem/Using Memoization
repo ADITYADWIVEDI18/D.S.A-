@@ -5,28 +5,22 @@ using namespace std;
 
 //Using MEMOIZATION
 
-int fibonacci(int n,vector<int>&dp)   
-{
-    if(n==0)return 0;
-    if(n==1)return 1;
-    
-    if(dp[n]!=-1)return dp[n];
-    
-    int left = fibonacci(n-1,dp);
-    int right = fibonacci(n-2,dp);
-    dp[n]=left+right;
-    
-    return dp[n];
-    
-}
-
-int main()
-{
-    int n;
-    cin>>n;
-    vector<int>dp(n+1,-1);
-    
-    cout<<fibonacci(n,dp)<<endl;
-
-    return 0;
+class Solution {
+public:
+    int solve(int n,vector<int>&dp)
+    {   //Base Case
+        if(n==0 || n==1)return 1;
+        //Saved 
+        if(dp[n]!=-1)return dp[n];
+        //Logic
+        int left = solve(n-1,dp);
+        int right = solve(n-2,dp);
+        return dp[n]=left + right;
+    }
+    int climbStairs(int n) {
+       
+       //Using Memoization
+        vector<int>dp(n+1,-1);
+        return solve(n,dp);
+    }
 }

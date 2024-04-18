@@ -1,26 +1,45 @@
-class Solution {
-public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int result = INT_MAX, n = matrix.size();
-        vector<vector<int>> memo(n, vector<int>(n, INT_MAX));
 
-        for (int col = 0; col < n; col++) {
-            result = min(result, dp(matrix, 0, col, memo)); 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int getMaxPathSum(vector<vector<int>> &matrix)
+{
+    int n = matrix.size();
+    vector<vector<int>> dp(n, vector<int>(n, INT_MIN));
+
+    for (int j = 0; j < matrix[0].size(); j++)
+    {
+        dp[0][j] = matrix[0][j];
+    }
+
+    // Logic
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j < matrix[i].size(); j++)
+        {
+            int down =  dp[i - 1][j];
+            int ldown = INT_MIN, rdown = INT_MIN;
+
+            if (j - 1 >= 0)
+            {
+                ldown =  dp[i - 1][j - 1];
+            }
+            if (j + 1 < matrix[0].size())
+            {
+                rdown =  dp[i - 1][j + 1];
+            }
+
+            dp[i][j] = matrix[i][j] + max(down, max(ldown, rdown));
         }
-
-        return result;
     }
 
-private:
-    int dp(vector<vector<int>>& matrix, int row, int col, vector<vector<int>>& memo) {
-        if (col < 0 || col >= matrix.size()) return INT_MAX;
-        if (row == matrix.size()-1) return matrix[row][col];
-        if (memo[row][col] != INT_MAX) return memo[row][col];
-        
-        int down = dp(matrix, row + 1, col, memo);
-        int downL = dp(matrix, row + 1, col - 1, memo);
-        int downR = dp(matrix, row + 1, col + 1, memo);
-
-        return memo[row][col] = matrix[row][col] + min({down, downL, downR});
+    int ans = INT_MIN;
+    for (int i = 0; i < matrix[0].size(); i++)
+    {
+        ans = max(ans, dp[n - 1][i]);
     }
-};
+
+    return ans;
+}
+

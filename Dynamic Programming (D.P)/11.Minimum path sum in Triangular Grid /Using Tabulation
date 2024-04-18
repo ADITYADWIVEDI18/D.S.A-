@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        //Using Tabulation :  Bottom Up Approach
+
+        //Dp data structure and other initialisation.
+        int n1 = triangle.size();
+        vector<vector<int>>dp(n1,vector<int>(n1,-1));
+        
+        //Base Values.
+        dp[0][0]=triangle[0][0];
+        
+        //Logic.
+        for(int i=1;i<n1;i++)
+        {
+            for(int j=0;j<triangle[i].size();j++)
+            {   
+                int path1=INT_MAX,path2=INT_MAX;
+                
+                if(j>=1)
+                path1=dp[i-1][j-1]+triangle[i][j];
+
+                if(j<triangle[i-1].size())
+                path2=dp[i-1][j] + triangle[i][j];
+
+                dp[i][j]= min(path1,path2);
+            }
+        }
+
+        int minPathSum = INT_MAX;
+        for(int j=0;j<dp[n1-1].size();j++)
+        {
+            minPathSum = min(minPathSum,dp[n1-1][j]);
+        }
+
+        return minPathSum;
+    }
+};

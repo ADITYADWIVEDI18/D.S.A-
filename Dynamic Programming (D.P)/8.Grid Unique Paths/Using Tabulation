@@ -1,1 +1,36 @@
+#include <bits/stdc++.h> 
+int uniquePaths(int m, int n) {
+	// Using Memoization : Bottom Up Approach
 
+	// Dp data structure for storing the all ways at each coordinates 
+	vector<vector<int>>dp(m,vector<int>(n,-1));
+
+	//Base Values
+	    // Paths to reach a cell in column 1.
+	for (int i = 0; i < m; i++) 
+    {   
+        dp[i][0] = 1; 
+    }
+
+    // Paths to reach a cell in row 1.
+    for (int j = 0; j < n; j++) 
+    {   
+        dp[0][j] = 1; 
+    }       
+
+	
+	//Logic 
+	for(int row=1;row<m;row++)
+	{
+		for(int col=1;col<n;col++)
+		{
+			 int left = dp[row-1][col];
+			 int up = dp[row][col-1];
+			 dp[row][col]=up+left;
+		}
+	}
+
+	return dp[m-1][n-1];
+
+
+}

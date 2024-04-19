@@ -1,1 +1,35 @@
 
+#include <bits/stdc++.h> 
+bool subsetSumToK(int n, int target, vector<int> &arr) {
+    
+    //Using Tabulation : Bottom Up Approach
+    
+   // dp Data Structure for memorization
+    vector<vector<int>>dp(n,vector<int>(target+1,0));
+
+    //Base Values
+    for(int i=0;i<n;i++)
+    {dp[i][0]=true;}
+
+    dp[0][0]=true;
+    if(arr[0]<=target)
+    {dp[0][arr[0]]=true;}
+
+    for(int i=1;i<n;i++)
+    {
+        for(int j=1;j<=target;j++)
+        {
+             bool notTake = dp[i - 1][j];
+             
+             bool Take = false;
+
+             if (arr[i] <= j) {
+               Take = dp[i - 1][j - arr[i]];
+             }
+                dp[i][j]=notTake||Take;
+        }  
+
+    }
+
+              return dp[n-1][target];
+}

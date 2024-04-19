@@ -1,0 +1,25 @@
+#include <vector>
+using namespace std;
+
+int solve(int ind, int target, vector<int>& arr, vector<vector<int>>& dp) {
+    // Base Case
+    if (target == 0) return true;
+    if (ind == 0) return arr[0] == target;
+
+    // Saved Data
+    if (dp[ind][target] != -1) return dp[ind][target];
+
+    // Logic
+    bool NotTaken = solve(ind - 1, target, arr, dp);
+    bool Taken = false;
+    if (arr[ind] <= target)
+        Taken = solve(ind - 1, target - arr[ind], arr, dp);
+
+    return dp[ind][target] = Taken || NotTaken;
+}
+
+bool subsetSumToK(int n, int k, vector<int>& arr) {
+    // Top Down Approach
+    vector<vector<int>> dp(n, vector<int>(k + 1, -1)); // increase k to k+1
+    return solve(n - 1, k, arr, dp);
+}

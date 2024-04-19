@@ -1,29 +1,41 @@
+EASILY UNDERSTANDABLE CODE || C++ || DP || EASY TABULATION APPROACH
+Interview problems
+Published on 19 Apr, 2024
+If the first element arr[0] is non-zero, then the only possibility is to select no elements from the array to achieve the target sum of zero (hence, dp[0][0] = 1). If arr[0] is zero, then there are two possibilities: either select no elements or select the first element (hence, dp[0][0] = 2).
+
+ 
+
+int mod=1e9+7;
+
 int findWays(vector<int>& arr, int k)
 {
-    int n = arr.size();
-    vector<vector<int>> dp(n, vector<int>(k + 1, 0));
+	// Using Tabulation : Bottom up Approach
+	
+	int n=arr.size();
+	vector<vector<int>>dp(n,vector<int>(k+1,0));
 
-    for (int i = 0; i < n; i++)
-    {
-        dp[i][0] = 1;
-    }
+	for(int i=0;i<n;i++)
+	{dp[i][0]=1;}
 
-    if (arr[0] <= k)
-    {
-        dp[0][arr[0]] = 1;
-    }
+	if(arr[0]<=k)
+	{dp[0][arr[0]]=1;}
 
-    for (int i = 1; i < n; i++)
-    {
-        for (int j = 1; j <= k; j++)
-        {
-            int notTake = dp[i - 1][j];
-            int take = (arr[i] <= j) ? dp[i - 1][j - arr[i]] : 0;
+	dp[0][0]=arr[0]?1:2;	
 
-            dp[i][j] = take + notTake;
-        }
-    }
+	for(int i=1;i<n;i++)
+	{
+		for(int j=0;j<=k;j++)
+		{
+			 int notTake = dp[i-1][j];
+			 int take = false;
+			 
+			 if(arr[i]<=j)
+			 {take=dp[i-1][j-arr[i]];}
 
-    return dp[n - 1][k];
+			 dp[i][j]=( take + notTake )%mod;
+		}
+	}
+
+		return dp[n-1][k];
+
 }
-

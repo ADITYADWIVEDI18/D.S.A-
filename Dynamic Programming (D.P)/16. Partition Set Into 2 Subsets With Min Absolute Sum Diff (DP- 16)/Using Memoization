@@ -1,0 +1,50 @@
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+class Solution {
+public:
+    int solve(int ind, int target, vector<int>& nums, vector<vector<int>>& dp)
+    {
+        // Base Case
+        if (target == 0) return true;
+        if (ind == 0) return dp[ind][target] = (nums[0] == target);
+
+        // Saved Data
+        if (dp[ind][target] != -1) return dp[ind][target];
+
+        // Logic
+        bool notTake = solve(ind - 1, target, nums, dp);
+        bool take = false;
+        if (nums[ind] <= target)
+        {
+            take = solve(ind - 1, target - nums[ind], nums, dp);
+        }
+        return dp[ind][target] = take || notTake;
+    }
+
+    int minimumDifference(vector<int>& nums) {
+        int n = nums.size();
+        int totSum = accumulate(nums.begin(), nums.end(), 0);
+        vector<vector<int>> dp(n, vector<int>(totSum + 1, -1));
+
+        for (int i = 0; i < totSum; i++)
+        {
+            bool solution = solve(n - 1, i, nums, dp);
+        }
+
+        int minAbsDiff = 1e9;
+
+        for (int i = 0; i <= totSum; i++)
+        {
+            if (dp[n - 1][i] == true)
+            {
+                int diff = abs(i - (totSum - i));
+                minAbsDiff = min(minAbsDiff, diff);
+            }
+        }
+
+        return minAbsDiff;
+    }
+};

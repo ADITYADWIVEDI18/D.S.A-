@@ -1,1 +1,35 @@
+class Solution {
+public:
+    bool solve(int ind , int target , vector<int>& nums, vector<vector<int>>&dp)
+    {   
+        // Base Case 
+        if(target==0)return true;
+        if(ind==0)return nums[0]==target; 
+        dp[0][0]=true;
+        // Saved Data 
+        if(dp[ind][target]!=-1)return dp[ind][target];
 
+        //Logic
+        bool nottake = solve(ind-1,target,nums,dp);
+        bool take = false;
+        if(nums[ind]<=target)
+        {
+            take = solve(ind-1,target-nums[ind],nums,dp);
+        }
+        return dp[ind][target]=take || nottake;
+    }
+    bool canPartition(vector<int>& nums) {
+     int target=0;
+     for(int i=0;i<nums.size();i++)
+     {
+         target+=nums[i];
+     }
+
+     if(target%2!=0)return false;
+     int n = nums.size();
+     vector<vector<int>>dp(n,vector(target+1,-1));
+      target/=2;
+     return solve(n-1,target,nums,dp);
+
+    }
+};

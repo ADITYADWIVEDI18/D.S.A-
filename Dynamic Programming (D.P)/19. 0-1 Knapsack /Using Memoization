@@ -1,0 +1,36 @@
+#include <bits/stdc++.h> 
+int solve(int ind, int maxWeight,vector<vector<int>>&dp,vector<int>&weight,vector<int>& value)
+{
+	// Base Conditions
+	if(ind==0)
+	{
+			if(weight[0]<=maxWeight)
+			return value[0];
+
+			return 0;
+	}
+
+	// Saved Data 
+	if(dp[ind][maxWeight]!=-1)return dp[ind][maxWeight];
+
+	//Logic
+	int nontake =0+solve(ind-1,maxWeight,dp,weight,value);
+	
+	int take = INT_MIN;
+	
+	if(weight[ind]<=maxWeight)
+	 take = value[ind]+solve(ind-1,maxWeight-weight[ind],dp,weight,value);
+
+	return dp[ind][maxWeight]=max(take,nontake); 
+
+
+}
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Using Memoization
+
+	// index and weight are the changeable factors therefore we take it as pivot for calculating the solution
+	vector<vector<int>>dp(n,vector<int>(maxWeight+1,-1));
+	return solve(n-1,maxWeight,dp,weight,value);
+	 
+}

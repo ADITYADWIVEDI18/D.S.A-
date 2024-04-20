@@ -1,1 +1,30 @@
+#include <bits/stdc++.h> 
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Space Optimization
 
+	vector<int>prev(maxWeight+1,0);
+
+	for(int i=weight[0];i<=maxWeight;i++)
+	{
+		prev[i]=value[0];
+	}
+
+	for(int item=1;item<n;item++)
+	{
+		vector<int>curr(maxWeight+1,0);
+
+		 for(int cap=0;cap<=maxWeight;cap++)
+		 {
+			 int nontake=prev[cap];
+			 int take = INT_MIN;
+			 if(weight[item]<=cap)
+			 {take =value[item]+prev[cap-weight[item]];}
+			 curr[cap]=max(take,nontake);
+		 }
+		 prev=curr;
+	}
+
+	return prev[maxWeight];
+
+}

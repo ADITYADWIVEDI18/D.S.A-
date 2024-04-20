@@ -1,1 +1,25 @@
+#include <bits/stdc++.h> 
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Using Tabulation 
 
+	vector<vector<int>>dp(n,vector<int>(maxWeight+1,0));
+
+	// Base Condition : 
+	 for (int i = weight[0]; i <= maxWeight; i++) {
+        dp[0][i] = value[0];
+    }
+
+	for(int item=1;item<n;item++)
+	{
+		for(int wt=0;wt<=maxWeight;wt++)
+		{
+				int nontake = dp[item-1][wt];
+				int take = INT_MIN;
+				if(weight[item]<=wt)
+				{take = value[item] + dp[item-1][wt-weight[item]];}
+				dp[item][wt]=max(take,nontake);
+		}
+	}
+		return dp[n-1][maxWeight];
+}

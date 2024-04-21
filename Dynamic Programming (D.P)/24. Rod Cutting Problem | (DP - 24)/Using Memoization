@@ -1,1 +1,26 @@
+int solve(int ind,int length, vector<int>&price,vector<vector<int>>&dp)
+{
+	//Base Conditions
+	if(length==0)return 0;
+	if(ind<0)return INT_MIN;
+
+	//Saved Data
+	if(dp[ind][length]!=-1)return dp[ind][length];
+
+	//Logic
+	int cut=INT_MIN;
+	int rod_length = ind+1; 
+	if(rod_length<=length)
+	 cut = ( price[ind] ) + solve(ind,length-rod_length,price,dp);
+	int notcut = solve(ind-1,length,price,dp); 
+
+	return dp[ind][length]=max(cut,notcut);
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Using Memoization
+	int length = n;
+	vector<vector<int>>dp(price.size(),vector<int>(n+1,-1));
+	return solve(price.size()-1,length,price,dp);
+}
 

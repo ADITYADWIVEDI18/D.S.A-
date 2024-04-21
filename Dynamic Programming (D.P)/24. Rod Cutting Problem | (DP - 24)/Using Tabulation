@@ -1,1 +1,22 @@
+int cutRod(vector<int> &price, int n)
+{
+	// Using Tabulation 
+	// Length and index are the two pivot around where whole problem solved using DP.
+	vector<vector<int>>dp(price.size()+1,vector<int>(n+1,0));
+
+	for(int ind=1;ind<price.size();ind++)
+	{	
+			for(int j=0;j<=n;j++)
+			{
+				int notcut = dp[ind-1][j];
+				int cut =INT_MIN;
+				int rod_length=ind;
+				if(rod_length<=j)
+				cut = price[ind-1]+dp[ind][j-rod_length];
+				dp[ind][j]=max(cut,notcut);
+			}
+	}
+		return dp[price.size()-1][n];
+}
+
 

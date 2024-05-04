@@ -1,0 +1,22 @@
+Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+
+Answer(MY SQL):
+
+/*
+City name starting with vowels from Station TABLE.
+Approach 1 : SELECT DISTINCT CITY FROM STATION WHERE LOWER(SUBSTR(CITY, 1, 1)) IN ('a','e','i','o','u');
+Approach 2 : SELECT DISTINCT CITY FROM STATION WHERE LOWER(CITY) LIKE 'a%' OR LOWER(CITY) LIKE 'e%' OR LOWER(CITY) LIKE 'i%' OR LOWER(CITY) LIKE 'o%' OR LOWER(CITY) LIKE 'u%';
+Approach 3 : SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^a|^e|^i|^o|^u'
+(ere in REGEXP this ^ symbol means word should start from that alphabet AND this | symbol means Bitwise or)
+Approah 4 :  select distinct city from STATION where city REGEXP '^[aeiouAEIOU]';
+Approach 5 : select DISTINCT(CITY) FROM STATION WHERE LEFT(CITY,1) IN ('a','e','i','o','u');
+*/
+
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE LOWER(SUBSTR(CITY, 1, 1)) IN ('a','e','i','o','u');
+
+
+
+
+

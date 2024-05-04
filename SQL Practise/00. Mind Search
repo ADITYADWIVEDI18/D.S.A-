@@ -1,0 +1,71 @@
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). 
+If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+
+/*
+SHORTEST 
+LONGEST 
+IF MORE THAN ONE CHOOSE THAT COMES FIRST WHEN ORDERED ALPHABETICALLY
+*/
+
+Answer (MY SQL) : 
+SELECT CITY, LENGTH(CITY) AS length_of_string
+FROM STATION
+ORDER BY LENGTH(CITY) DESC, CITY
+LIMIT 1;
+
+
+SELECT CITY, LENGTH(CITY) AS length_of_string
+FROM STATION
+ORDER BY LENGTH(CITY), CITY
+LIMIT 1;
+
+..............................................................
+Approach 1 :
+
+SELECT  CITY, LENGTH(CITY) AS TAMANHO
+FROM STATION
+ORDER BY LENGTH(CITY) DESC,
+CITY LIMIT 1;
+SELECT  CITY, LENGTH(CITY) AS TAMANHO
+FROM STATION
+ORDER BY LENGTH(CITY),
+CITY LIMIT 1
+
+Approach 2 : 
+MS SQL SERVER
+
+SELECT TOP(1) CITY, LEN(CITY)
+FROM STATION 
+WHERE LEN(CITY) = (
+                                    SELECT MIN(LEN(CITY))
+                                    FROM STATION 
+                                    )
+ORDER BY CITY ASC
+
+SELECT TOP(1) CITY, LEN(CITY)
+FROM STATION
+WHERE LEN(CITY) = (
+                                            SELECT MAX(LEN(CITY))
+                                            FROM STATION
+                                            )
+ORDER BY CITY ASC
+
+Approach 3 : 
+SELECT TOP 1 CITY, LEN(CITY)
+FROM STATION
+ORDER BY LEN(CITY), CITY
+
+SELECT TOP 1 CITY, LEN(CITY)
+FROM STATION
+ORDER BY LEN(CITY) DESC, CITY
+
+Approach 4 :
+select mi.city as city, mi.city_length as city_length from
+    (select city, char_length(city) as city_length 
+    from station
+    order by city_length, city limit 1) as mi
+union 
+select ma.city as city, ma.city_length as city_length from
+    (select city, char_length(city) as city_length 
+    from station
+    order by city_length desc, city limit 1) as ma;

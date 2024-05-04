@@ -1,0 +1,52 @@
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.
+
+Input Format
+
+The STATION table is described as follows:
+<img src="https://s3.amazonaws.com/hr-challenge-images/9336/1449345840-5f0a551030-Station.jpg" />
+
+Answer(MY SQL):
+
+Approach 1:
+SELECT ROUND(AVG(LAT_N), 4) 
+FROM
+(
+   SELECT LAT_N,
+      ROW_NUMBER() OVER (ORDER BY LAT_N ASC, ID ASC) AS ASC_IDX,
+      ROW_NUMBER() OVER (ORDER BY LAT_N DESC, ID DESC) AS DESC_IDX
+   FROM STATION
+) DATA
+WHERE
+   ASC_IDX IN (DESC_IDX, DESC_IDX - 1, DESC_IDX + 1);
+
+Approach 2 : (Important part is "TOP 50 PERCENT" mean %50 of rows. Ordering is important for upper half and lower half)
+SELECT cast( round((( (SELECT MAX(LAT_N) FROM (SELECT TOP 50 PERCENT LAT_N 
+FROM STATION ORDER BY LAT_N) AS BottomHalf) + (SELECT MIN(LAT_N) FROM(SELECT TOP 50 PERCENT LAT_N FROM STATION ORDER BY LAT_N DESC) AS TopHalf) ) / 2) ,4) as DECIMAL (10,4) ) AS Median
+
+Approach 3: 
+SELECT CAST(lat_n AS NUMERIC(10, 4))
+FROM (
+    SELECT lat_n, 
+        ROW_NUMBER() OVER (ORDER BY lat_n) AS rn 
+    FROM station
+) AS tbl 
+WHERE rn = 250 
+
+Approach 4: 
+SELECT ROUND(AVG(LAT_N), 4) AS Median_Latitude
+FROM (
+    SELECT @row_num := @row_num + 1 AS row_num, LAT_N
+    FROM (SELECT @row_num := 0) AS init, STATION
+    ORDER BY LAT_N
+) AS ranked,
+(SELECT COUNT(*) AS total_rows FROM STATION) AS total
+WHERE row_num BETWEEN total.total_rows / 2 AND total.total_rows / 2 + 1;
+
+Approach 5: 
+This should work for both odd and even test samples using MS SQL. If you could find a way to make this code shorter, feel free to give some ideas.
+
+WITH a as (SELECT LAT_N, ROW_NUMBER() OVER(ORDER BY LAT_N) as R, NTILE(2) OVER (ORDER BY LAT_N) AS TILE FROM STATION)
+
+SELECT TOP(1) CASE WHEN b.num_row % 2 = 0 THEN FORMAT(ROUND((MAX_TILE_1 + MIN_TILE_2/2), 4), '0.####') ELSE FORMAT(ROUND(MAX_TILE_1, 4), '0.####') END AS result FROM (SELECT LAT_N, R, TILE, (SELECT TOP(1) R from a order by R desc) as num_row, (SELECT MAX(LAT_N) FROM a WHERE TILE=1) as MAX_TILE_1, (SELECT MIN(LAT_N) FROM a WHERE TILE=2) as MIN_TILE_2 FROM a) as b
+
+   

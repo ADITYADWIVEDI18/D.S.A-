@@ -1,0 +1,48 @@
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+
+Note: Print NULL when there are no more names corresponding to an occupation.
+
+Input Format
+
+The OCCUPATIONS table is described as follows:
+<img src="https://s3.amazonaws.com/hr-challenge-images/12889/1443816414-2a465532e7-1.png" />
+
+Note: Print NULL when there are no more names corresponding to an occupation.
+
+ANSWER(MY SQL):
+WITH
+    D AS
+        (SELECT NAME, ROW_NUMBER() OVER() AS ID 
+         FROM OCCUPATIONS 
+         WHERE OCCUPATION = 'DOCTOR'
+        ORDER BY NAME),
+    P AS
+        (SELECT NAME, ROW_NUMBER() OVER() AS ID 
+         FROM OCCUPATIONS 
+         WHERE OCCUPATION = 'PROFESSOR'
+        ORDER BY NAME),
+    S AS
+        (SELECT NAME, ROW_NUMBER() OVER() AS ID 
+         FROM OCCUPATIONS 
+         WHERE OCCUPATION = 'SINGER'
+        ORDER BY NAME),
+    A AS
+        (SELECT NAME, ROW_NUMBER() OVER() AS ID 
+         FROM OCCUPATIONS 
+         WHERE OCCUPATION = 'ACTOR'
+        ORDER BY NAME),
+    H AS
+        (SELECT ID FROM D
+        UNION 
+        SELECT ID FROM P
+        UNION 
+        SELECT ID FROM S
+        UNION 
+        SELECT ID FROM A)
+        
+SELECT D.NAME AS DOCTOR_NAME, P.NAME AS PROFESSOR_NAME, S.NAME AS SINGER_NAME, A.NAME AS ACTOR_NAME
+FROM H
+LEFT JOIN D ON H.ID = D.ID
+LEFT JOIN P ON H.ID = P.ID
+LEFT JOIN S ON H.ID = S.ID
+LEFT JOIN A ON H.ID = A.ID;

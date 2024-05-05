@@ -1,0 +1,5 @@
+Query a count of the number of cities in CITY having a Population larger than .
+
+Select Count(NAME)
+From CITY
+Where (POPULATION>100000);

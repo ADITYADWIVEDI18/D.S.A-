@@ -1,0 +1,70 @@
+Method 1:
+pow(2,i-1);
+
+Method 2: Using BFS
+Algorithm: 
+
+Create the tree, a queue to store the nodes and insert the root in the queue. Create variables level=0,count =0 and level_no=-1
+The implementation will be slightly different, all the elements of same level will be removed in a single iteration.
+Run a loop while size of queue is greater than 0. Get the size of queue (size) and store it. If size is greater than count then update count = size and level_no = level.
+Now run a loop size times, and pop one node from the queue and insert its childrens (if present).
+Increment level.
+
+Method 3: Using DFS
+An approach using DFS:
+
+Iterate over the tree and for every nodes in the tree, count the frequency of nodes at particular height or depth.
+
+Create a map for counting the frequency of nodes at a particular height or depth.
+Iterate over the tree
+Increment the count of the number of nodes at a particular depth for every node.
+Iterate over the map and find the level that has the maximum number of nodes.
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+ 
+/* Helper function that allocates a new node with the
+   given data and NULL left and right pointers. */
+struct Node* newNode(int data)
+{
+    struct Node* node = new Node;
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return(node);
+}
+ 
+ 
+void dfs(Node* root,unordered_map<int, int> &unmap, int depth){
+    if(root == NULL) return;
+     
+    // Increment the count of nodes at depth in map
+    unmap[depth]++;
+     
+    dfs(root->left,unmap, depth + 1);
+    dfs(root->right, unmap, depth + 1);
+}
+ 
+int maxNodeLevel(Node *root)
+{
+    unordered_map<int, int> unmap;
+    dfs(root, unmap, 0);
+    int maxx = INT_MIN, result;
+     
+    for(auto it : unmap){
+        if(it.second > maxx){
+            result = it.first;
+            maxx = it.second;
+        }
+        else if(it.second == maxx){
+            result = min(result, it.first);
+        }
+    }
+     
+    return result;
+}
+ 

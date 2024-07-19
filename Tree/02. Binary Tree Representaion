@@ -1,0 +1,135 @@
+Using Linked List :
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+
+struct ListNode
+{
+    int data;
+    ListNode *next;
+}
+
+struct BinaryTreeNode 
+{
+    int data;
+    BinaryTreeNode *left,*right;
+}
+
+void push(struct ListNode ** head_ref, int new_data)
+{
+    struct ListNode* new_node = new ListNode;
+    new_node->data = new_data;
+    
+     new_node->next = (*head_ref);
+ 
+    (*head_ref)    = new_node;
+    
+}
+
+void convertList2Binary(ListNode *head, BinaryTreeNode * &root)
+{
+    queue<BinaryTreeNode *>q;
+    
+    if(head==NULL)
+    {
+        root = NULL;
+        return;
+    }
+    
+    root = newBinaryTreeNode(head->data);
+    q.push(root);
+    
+    head=head->next;
+    
+    while(head)
+    {
+        BinaryTreeNode * parent = q.front();
+        q.pop();
+        
+        BinaryTreeNode *leftChild = NULL, *rightChild = NULL;
+        leftChild = newBinaryTreeNode(head->data);
+        q.push(leftChild);
+        head = head->next;
+        
+        if(head)
+        {
+            rightChild = newBinaryTreeNode(head->data);
+            q.push(rightChild);
+            head=head->next;
+        }
+        
+        parent->left = leftChild;
+        parent->right = rightChild;
+    }
+    
+    
+}
+
+int main()
+{
+    struct ListNode *head = NULL;
+    push(&head,30);
+    
+    BinaryTreeNode *root;
+    convertList2Binary(head,root);
+    
+    cout<<"Inorder Traversal of constructed Binary Tree";
+    inorderTraversal(root);
+}
+
+Using Array :
+
+#include<bits/stdc++.h>
+using namespace std;
+
+char tree[10];
+
+int root(char key) {
+  if (tree[0] != '\0')
+    cout << "Tree already had root";
+  else
+    tree[0] = key;
+  return 0;
+}
+ 
+int set_left(char key, int parent) {
+  if (tree[parent] == '\0')
+    cout << "Can't set child at "
+    << (parent * 2) + 1
+    << " , no parent found";
+  else
+    tree[(parent * 2) + 1] = key;
+  return 0;
+}
+ 
+int set_right(char key, int parent) {
+  if (tree[parent] == '\0')
+    cout << "Can't set child at "
+    << (parent * 2) + 2
+    << " , no parent found";
+  else
+    tree[(parent * 2) + 2] = key;
+  return 0;
+}
+ 
+int print_tree() {
+  cout << "\n";
+  for (int i = 0; i < 10; i++) {
+    if (tree[i] != '\0')
+      cout << tree[i];
+    else
+      cout << "-";
+  }
+  return 0;
+}
+ 
+int main() {
+  root('A');
+  set_left('B',0);
+  set_right('C', 0);
+  set_left('D', 1);
+  set_right('E', 1);
+  set_right('F', 2);
+  print_tree();
+  return 0;
+}
